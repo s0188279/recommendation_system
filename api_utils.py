@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 
-API_KEY = ""
+API_KEY = "ВАШ_КЛЮЧ"
 
 @st.cache_data(ttl=3600)
 def get_movie_info(title):
