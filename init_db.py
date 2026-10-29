@@ -4,12 +4,10 @@ import os
 
 
 def init_database():
-    # Названия файлов
     db_name = 'october.db'
     movies_file = 'movies.csv'
     ratings_file = 'ratings.csv'
 
-    # Проверка наличия файлов
     if not os.path.exists(movies_file):
         print(f"Ошибка: Файл {movies_file} не найден!")
         return
@@ -17,12 +15,11 @@ def init_database():
         print(f"Ошибка: Файл {ratings_file} не найден! (Нужен оригинал с оценками)")
         return
 
-    # Подключаемся к базе
     conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
 
     print("Создаем таблицы...")
-    # Таблица пользователей
+
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -31,7 +28,6 @@ def init_database():
         )
     ''')
 
-    # Таблица оценок
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS ratings (
             userId INTEGER,
@@ -50,11 +46,9 @@ def init_database():
         print("Загружаем и фильтруем оценки (это может занять секунд 10)...")
         ratings_df = pd.read_csv(ratings_file)
 
-        # Оставляем только те оценки, которые относятся к нашим 103 фильмам
         valid_ids = movies_df['movieId'].unique()
         filtered_ratings = ratings_df[ratings_df['movieId'].isin(valid_ids)]
 
-        # Сохраняем оценки в БД
         filtered_ratings.to_sql('ratings', conn, if_exists='replace', index=False)
 
         conn.commit()
