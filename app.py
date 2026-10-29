@@ -6,14 +6,12 @@ from recommender import get_recommendations
 
 st.markdown("""
     <style>
-    /* Убираем отступы самого Streamlit сверху */
     .block-container {
-        padding-top: 1rem !important; /* Минимум места сверху */
+        padding-top: 1rem !important; 
         padding-bottom: 0rem !important;
-        max-width: 95% !important; /* Чтобы контент был шире */
+        max-width: 95% !important; 
     }
 
-    /* Делаем заголовок максимально компактным */
     .main-title {
         margin-top: -30px !important; 
         margin-bottom: 10px !important;
@@ -31,7 +29,6 @@ st.markdown("""
         color: #f57c00 !important;
         border-bottom-color: #f57c00 !important;
     }
-    /* Красивые поля ввода */
     .stTextInput input {
         background-color: #161b22 !important;
         color: white !important;
@@ -57,22 +54,19 @@ st.markdown("""
         border: none !important;
     }
 
-    /* Кнопки внутри диалогов */
     [data-testid="stDialog"] button {
         margin-top: 10px;
         height: 45px;
         font-weight: bold !important;
     }
 
-    /* Глобальный шрифт */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
     html, body, [class*="css"], .stMarkdown {
         font-family: 'Inter', sans-serif !important;
-        font-size: 18px !important; /* Увеличиваем базовый размер текста */
+        font-size: 18px !important; 
     }
 
-    /* Делаем меню кликабельным и крупным */
     .nav-link {
         display: block;
         padding: 10px 15px;
@@ -88,24 +82,21 @@ st.markdown("""
         transform: translateX(5px);
     }
 
-    /* Увеличиваем заголовки жанров */
     h1, h2 {
         font-size: 2.5rem !important;
         margin-top: 2rem !important;
     }
 
-    /* Глобальные переменные темы */
     :root {
         --primary-color: #f57c00 !important;
         --base: dark !important;
     }
 
-    /* Фон приложения */
     .stApp { background-color: #0d1117; }
 
     button, [data-testid="baseButton-secondary"], [data-testid="baseButton-primary"] {
         height: 50px !important;
-        border-radius: 12px !important; /* Скругленные углы */
+        border-radius: 12px !important; 
         font-size: 16px !important;
         font-weight: 600 !important;
         background-color: #21262d !important;
@@ -133,7 +124,7 @@ st.markdown("""
     button:focus, button:active, button:focus-visible, 
     [data-testid="baseButton-secondary"]:focus, 
     [data-testid="baseButton-secondary"]:active {
-        background-color: #21262d !important; /* Оставляем темным, не синим */
+        background-color: #21262d !important; 
         color: #f57c00 !important;
         border-color: #f57c00 !important;
         box-shadow: none !important;
@@ -145,7 +136,6 @@ st.markdown("""
         color: #f57c00 !important;
     }
 
-    /* Фиксируем высоту всех картинок */
     [data-testid="stImage"] img {
         height: 400px !important;
         object-fit: cover !important;
@@ -153,7 +143,6 @@ st.markdown("""
         border: 1px solid #30363d !important;
     }
 
-    /* Фиксируем заголовки, чтобы не прыгали (ровно 2 строки) */
     .stMarkdown div p strong {
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -165,42 +154,36 @@ st.markdown("""
         margin-top: 5px;
     }
 
-    /*  БОКОВОЕ МЕНЮ */
     .nav-link {
         color: #f57c00 !important;
         text-decoration: none !important;
         font-weight: bold;
     }
 
-    /* Скрыть индикатор загрузки "Running" */
     [data-testid="stStatusWidget"] { display: none; }
     
-    /* Делаем диалоговое окно широким и центрируем его */
     div[data-testid="stDialog"] div[role="dialog"] {
         width: 80vw !important;
         max-width: 950px !important;
         min-width: 300px !important;
-        margin: 0 auto !important; /* Центрирование */
+        margin: 0 auto !important;
     }
 
-    /* Фикс для содержимого внутри диалога */
     div[data-testid="stDialog"] .stColumn {
         width: 100% !important;
     }
-    /* Увеличиваем текст приветствия (логин) */
+ 
     .user-welcome {
         font-size: 24px !important;
         font-weight: bold !important;
         color: white !important;
     }
 
-    /* Делаем текст во всех кнопках крупнее */
     button p {
         font-size: 18px !important;
         font-weight: 600 !important;
     }
 
-    /* Стили для личного кабинета (текст названия и оценки) */
     .profile-movie-title {
         font-size: 22px !important;
         font-weight: bold !important;
@@ -220,20 +203,14 @@ st.markdown('<h1 style="text-align: center; color: #f57c00;">🍿 Кинотеа
 def cached_get_movie_info(title):
     return get_movie_info(title)
 
-
-# Настройка страницы
 st.set_page_config(page_title="Октябрь", layout="wide")
-
 
 def get_db():
     return sqlite3.connect('october.db')
 
-
 if 'user' not in st.session_state:
     st.session_state.user = None
 
-
-# --- ОКНА (ДИАЛОГИ) ---
 @st.dialog("Вход / Регистрация")
 def auth_dialog():
     t1, t2 = st.tabs(["Вход", "Регистрация"])
@@ -260,11 +237,8 @@ def auth_dialog():
                 except:
                     st.error("Логин занят")
 
-
-# Инициализация флага
 if 'show_auth' not in st.session_state:
     st.session_state.show_auth = False
-
 
 @st.dialog("Подробнее")
 def details(m_id, title, genres):
@@ -326,14 +300,10 @@ def profile_dialog():
             st.divider()
 
 
-
-
-# --- ФУНКЦИЯ ДЛЯ ОТРИСОВКИ РЯДА С КНОПКАМИ ---
 def render_carousel(genre_name, movies_list):
     st.markdown(f'<div id="{genre_name.lower()}"></div>', unsafe_allow_html=True)
     st.header(f"🍿 {genre_name}")
 
-    # Ключ для хранения текущей позиции в session_state
     state_key = f"pos_{genre_name}"
     if state_key not in st.session_state:
         st.session_state[state_key] = 0
@@ -348,15 +318,12 @@ def render_carousel(genre_name, movies_list):
                 st.session_state[state_key] -= 5
                 st.rerun()
 
-    # Берем срез из 5 фильмов
     visible_movies = movies_list[current_pos: current_pos + 5]
 
-    # Отрисовываем 5 фильмов
     for i, movie in enumerate(visible_movies):
         with cols[i + 1]:
             info = cached_get_movie_info(movie['title'])
             poster_url = info.get('poster')
-
 
             if not poster_url or poster_url == "N/A" or len(poster_url) < 10:
                 clean_title = movie['title'].replace(" ", "+")
@@ -373,8 +340,6 @@ def render_carousel(genre_name, movies_list):
                 st.session_state[state_key] += 5
                 st.rerun()
 
-
-# --- БОКОВАЯ ПАНЕЛЬ (НАВИГАЦИЯ) ---
 with st.sidebar:
     if st.session_state.user:
 
@@ -394,20 +359,15 @@ with st.sidebar:
     for g in ["Боевик", "Комедия", "Драма", "Ужасы", "Мультфильм"]:
         st.markdown(f'<a href="#{g.lower()}" class="nav-link">{g}</a>', unsafe_allow_html=True)
 
-# --- ОСНОВНОЙ КОНТЕНТ ---
-
-# Рекомендации
 if st.session_state.user:
     recs = get_recommendations(st.session_state.user['id'])
     if recs:
-        # Используем ту же функцию карусели, что и для жанров
         render_carousel("Специально для вас", recs)
     else:
         st.info("Поставьте больше оценок!")
 
 st.divider()
 
-# Жанры по 15 фильмов
 with get_db() as conn:
     movies_df = pd.read_sql("SELECT * FROM movies", conn)
 
@@ -421,7 +381,6 @@ for genre in genres:
         render_carousel(genre, genre_movies)
     st.divider()
 
-# Вызов окна входа, если был нажат переход из деталей
 if st.session_state.show_auth:
-    st.session_state.show_auth = False  # Сбрасываем флаг
+    st.session_state.show_auth = False 
     auth_dialog()
