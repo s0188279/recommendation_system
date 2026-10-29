@@ -248,7 +248,7 @@ def details(m_id, title, genres):
     with c1:
         poster_url = info.get('poster')
         if not poster_url or poster_url == "N/A":
-            poster_url = "https://via.placeholder.com/400x600/161b22/f57c00?text=No+Poster"
+            poster_url = "https://placehold.co/400x600/161b22/f57c00?text=No+Poster"
         st.image(poster_url, use_container_width=True)
 
     with c2:
@@ -326,8 +326,7 @@ def render_carousel(genre_name, movies_list):
             poster_url = info.get('poster')
 
             if not poster_url or poster_url == "N/A" or len(poster_url) < 10:
-                clean_title = movie['title'].replace(" ", "+")
-                poster_url = f"https://via.placeholder.com/400x600/161b22/f57c00?text={clean_title}"
+                poster_url = "https://placehold.co/400x600/161b22/f57c00?text=No+Poster"
 
             st.image(poster_url, use_container_width=True)
             st.write(f"**{movie['title']}**")
